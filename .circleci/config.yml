@@ -1,8 +1,29 @@
 version: 2
 jobs:
-  build:
+  test:
+    working_directory: /test
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: mongo:3.6-xenial
+        ports:
+          - "27017:27017"
+      - image: elasticsearch:6.5.4
+        ports:
+          - "9200:9200"
     steps:
       - checkout
-      - run: echo "A first hello"
+      - run:
+          name: install mongo client
+          command: |
+            sudo apt-get install -y mongodb-clients
+      - run:
+          name: wait for mongodb container to be up
+          command: |
+            ./wait-for-it.sh 127.0.0.1:27017 -t 120
+      - run:
+          name: create admin user for mongo
+          command: |
+            mongo --eval 'db.createUser({user: "admin", pwd: "password", roles:[{ role: "userAdminAnyDatabase", db: "admin" } ] });'
+      - run:
+          name: check if user persists
+          command: |
+            mongo --eval 'db.system.users.find({user:'admin'}).count()'
