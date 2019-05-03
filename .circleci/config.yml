@@ -1,7 +1,7 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/
+  test:
+    working_directory: ~/test
     docker:
       - image: circleci/golang:1.11
         environment:
@@ -27,3 +27,9 @@ jobs:
           name: check if user persists
           command: |
             mongo --eval 'db.system.users.find({user:'admin'}).count()'
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - test
