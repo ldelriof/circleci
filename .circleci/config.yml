@@ -26,7 +26,7 @@ jobs:
       - run:
           name: check if user persists
           command: |
-            mongo --eval 'show users'
+            mongo --eval 'db.getUsers()'
 
 workflows:
   version: 2
