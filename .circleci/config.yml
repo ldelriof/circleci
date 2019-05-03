@@ -22,11 +22,11 @@ jobs:
       - run:
           name: create admin user for mongo
           command: |
-            mongo --eval 'db.createUser({user: "admin", pwd: "password", roles:["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"] });'
+            mongo --eval 'db.createUser({user: "admin", pwd: "password", roles:[{ role: "userAdminAnyDatabase", db: "admin" } ] });'
       - run:
           name: check if user persists
           command: |
-            mongo --eval 'db.system.users.find({user:'admin'}).count()'
+            mongo --eval 'show users'
 
 workflows:
   version: 2
