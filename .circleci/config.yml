@@ -1,7 +1,6 @@
 version: 2
 jobs:
-  test:
-    working_directory: /test
+  build:
     docker:
       - image: mongo:3.6-xenial
         ports:
