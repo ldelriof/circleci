@@ -22,7 +22,7 @@ jobs:
       - run:
           name: create admin user for mongo
           command: |
-            mongo --eval 'db.createUser({user: "admin", pwd: "password", roles:["userAdminAnyDatabase", role: "dbAdminAnyDatabase", role: "readWriteAnyDatabase"] });'
+            mongo --eval 'db.createUser({user: "admin", pwd: "password", roles:["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"] });'
       - run:
           name: check if user persists
           command: |
